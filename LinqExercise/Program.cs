@@ -21,29 +21,64 @@ namespace LinqExercise
              */
 
             //TODO: Print the Sum of numbers
+            Console.WriteLine($"Sum: {numbers.Sum()}");
+
 
             //TODO: Print the Average of numbers
+            Console.WriteLine($"Average: {numbers.Average()}");
 
             //TODO: Order numbers in ascending order and print to the console
 
+            Console.WriteLine("Ascending:");
+            foreach (var n in numbers.OrderBy(num => num))
+                Console.Write(n + " ");
+
             //TODO: Order numbers in descending order and print to the console
 
+            Console.WriteLine("\nDescending:");
+            foreach (var n in numbers.OrderByDescending(num => num))
+                Console.Write(n + " ");
+
             //TODO: Print to the console only the numbers greater than 6
+            Console.WriteLine("\nGreater than 6:");
+            foreach (var n in numbers.Where(num => num > 6))
+                Console.Write(n + " ");
 
             //TODO: Order numbers in any order (ascending or desc) but only print 4 of them **foreach loop only!**
+            Console.WriteLine("\nAny 4 numbers:");
+            foreach (var n in numbers.Take(4))
+                Console.Write(n + " ");
 
             //TODO: Change the value at index 4 to your age, then print the numbers in descending order
+
+            numbers[4] = 22;
+            Console.WriteLine("\nDescending after changing index 4:");
+            foreach (var n in numbers.OrderByDescending(num => num))
+                Console.Write(n + " ");
 
             // List of employees ****Do not remove this****
             var employees = CreateEmployees();
 
             //TODO: Print all the employees' FullName properties to the console only if their FirstName starts with a C OR an S and order this in ascending order by FirstName.
 
+            Console.WriteLine("\nEmployees whose first name starts with C or S:");
+            foreach (var e in employees.Where(e => e.FirstName.StartsWith("C") || e.FirstName.StartsWith("S")).OrderBy(e => e.FirstName))
+                Console.WriteLine(e.FullName);
+
             //TODO: Print all the employees' FullName and Age who are over the age 26 to the console and order this by Age first and then by FirstName in the same result.
+
+            Console.WriteLine("\nEmployees over 26 years old:");
+            foreach (var e in employees.Where(e => e.Age > 26).OrderBy(e => e.Age).ThenBy(e => e.FirstName))
+                Console.WriteLine($"{e.FullName} {e.Age}");
 
             //TODO: Print the Sum and then the Average of the employees' YearsOfExperience if their YOE is less than or equal to 10 AND Age is greater than 35.
 
+            var employeesFiltered = employees.Where(e => e.YearsOfExperience <= 10 && e.Age > 35);
+            Console.WriteLine($"Sum of YearsOfExperience: {employeesFiltered.Sum(e => e.YearsOfExperience)}");
+            Console.WriteLine($"Average of YearsOfExperience: {employeesFiltered.Average(e => e.YearsOfExperience)}");
+
             //TODO: Add an employee to the end of the list without using employees.Add()
+            employees = employees.Concat(new List<Employee> { new Employee("John", "Doe", 30, 5) }).ToList();
 
 
             Console.WriteLine();
